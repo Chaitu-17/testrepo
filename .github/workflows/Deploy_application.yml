@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - jira-sefa-test
       - main
 # permissions:
 #   contents: write
