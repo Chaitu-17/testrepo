@@ -18,6 +18,7 @@ jobs:
     - name: Generate Git Tag
       id: generate_tag
       run: |
+        set -e
         VERSION_PREFIX="v"
         VERSION_MAJOR_MINOR="1.0"
         VERSION_PATCH=$(git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$')
@@ -32,6 +33,7 @@ jobs:
 
     - name: Push Git Tag
       run: |
+        set -e
         git config user.name "GitHub Actions"
         git config user.email "github-actions@users.noreply.github.com"
         git tag $NEW_TAG
