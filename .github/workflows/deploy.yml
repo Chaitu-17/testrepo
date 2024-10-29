@@ -33,11 +33,10 @@ jobs:
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
 
     - name: Push Git Tag
-      env:
-        github_token: ${{ secrets.WORKFLOW_TOKEN }}
       run: |
         set -e
         git config user.name "GitHub Actions"
         git config user.email "github-actions@users.noreply.github.com"
         git tag $NEW_TAG
         git push origin $NEW_TAG
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} $NEW_TAG
