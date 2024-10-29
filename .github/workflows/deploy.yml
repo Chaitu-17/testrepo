@@ -34,7 +34,7 @@ jobs:
 
     - name: Push Git Tag
       env:
-        token: ${{ secrets.WORKFLOW_TOKEN }}
+        github_token: ${{ secrets.WORKFLOW_TOKEN }}
       run: |
         set -e
         git config user.name "GitHub Actions"
