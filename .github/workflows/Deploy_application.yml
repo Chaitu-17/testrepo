@@ -1,10 +1,10 @@
 name: Deploy Application
 
 on:
-  push:
-    branches:
-      - main
-      - jira-sefa-test1
+  # push:
+  #   branches:
+  #     - main
+  #     - jira-sefa-test1
   workflow_dispatch:
     inputs:
       choice:
