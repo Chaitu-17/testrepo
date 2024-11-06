@@ -2,10 +2,18 @@ name: Deploy Application
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - jira-sefa-test
-      - main
+    inputs:
+      choice:
+         type: choice
+         description: 'select the env to delpoy'
+         required: true
+         options:
+          - main
+          - jira-sefa-test
+  # push:
+  #   branches:
+  #     - jira-sefa-test
+  #     - main
 # permissions:
 #   contents: write
 
