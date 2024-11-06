@@ -13,7 +13,7 @@ on:
         required: true
         options:
           - main
-          - jira-sefa-test
+          - jira-sefa-test1
 
 jobs:
   build:
