@@ -1,33 +1,35 @@
 name: Deploy Application
 
 on:
+  push:
+    branches:
+      - main
+      - jira-sefa-test1
   workflow_dispatch:
     inputs:
       choice:
-         type: choice
-         description: 'select the env to delpoy'
-         required: true
-         options:
+        type: choice
+        description: 'Select the environment to deploy'
+        required: true
+        options:
+          - main
           - jira-sefa-test
-          - jira-sefa-test1
-  # push:
-  #   branches:
-  #     - jira-sefa-test
-  #     - main
-# permissions:
-#   contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # if: "contains(github.event.head_commit.message, 'deploy application')"
     steps:
+      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          fetch-depth: '0'
+          fetch-depth: '0'  # Ensure full history for tag creation
 
-      - name: Generate Git Tag
+      # Generate Git tag if conditions match
+      - name: Generate and Push Git Tag
+        if: |
+          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/jira-sefa-test1') &&
+          contains(github.event.head_commit.message, 'push_to_master')
         id: generate_tag
         run: |
           set -e
@@ -43,12 +45,23 @@ jobs:
           echo "Generated new tag: $NEW_TAG"
           echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
 
+      # Push the generated tag if conditions are met
       - name: Push Git Tag
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+        if: |
+          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/jira-sefa-test1') &&
+          contains(github.event.head_commit.message, 'push_to_master')
         run: |
           set -e
-          # git config user.name "chaitanya" # Replace with your name
-          # git config user.email "mr.kanneganti6003@gmail.com" # Replace with your email
           git tag $NEW_TAG
           git push origin $NEW_TAG
+
+      # # Optional: Deployment based on the environment choice
+      # - name: Deploy to Production
+      #   if: ${{ github.event.inputs.choice == 'main' }}
+      #   run: |
+      #     echo "Deploying to Production..."
+
+      # - name: Deploy to Staging
+      #   if: ${{ github.event.inputs.choice == 'jira-sefa-test' }}
+      #   run: |
+      #     echo "Deploying to Staging..."
