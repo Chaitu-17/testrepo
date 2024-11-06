@@ -12,7 +12,7 @@ on:
         description: 'Select the environment to deploy'
         required: true
         options:
-          - main
+          - jira-sefa-test
           - jira-sefa-test1
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
       # Generate Git tag if conditions match
       - name: Generate and Push Git Tag
         if: |
-          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/jira-sefa-test1') &&
+          (github.ref == 'refs/heads/jira-sefa-test' || github.ref == 'refs/heads/jira-sefa-test1') &&
           contains(github.event.head_commit.message, 'push_to_master')
         id: generate_tag
         run: |
@@ -48,7 +48,7 @@ jobs:
       # Push the generated tag if conditions are met
       - name: Push Git Tag
         if: |
-          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/jira-sefa-test1') &&
+          (github.ref == 'refs/heads/jira-sefa-test' || github.ref == 'refs/heads/jira-sefa-test1') &&
           contains(github.event.head_commit.message, 'push_to_master')
         run: |
           set -e
