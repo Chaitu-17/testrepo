@@ -8,8 +8,8 @@ on:
          description: 'select the env to delpoy'
          required: true
          options:
-          - main
           - jira-sefa-test
+          - jira-sefa-test1
   # push:
   #   branches:
   #     - jira-sefa-test
