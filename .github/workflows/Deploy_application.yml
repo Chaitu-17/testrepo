@@ -28,8 +28,9 @@ jobs:
       # Generate Git tag if conditions match
       - name: Generate and Push Git Tag
         if: |
-          (github.ref == 'refs/heads/jira-sefa-test' || github.ref == 'refs/heads/jira-sefa-test1') &&
-          contains(github.event.head_commit.message, 'push_to_master')
+          contains(github.event.head_commit.message, 'push_to_master') && 
+          startsWith(github.ref == 'refs/heads/jira-sefa-test' || github.ref == 'refs/heads/jira-sefa-test1') 
+          
         id: generate_tag
         run: |
           set -e
