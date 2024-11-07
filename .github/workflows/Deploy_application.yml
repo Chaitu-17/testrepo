@@ -52,3 +52,9 @@ jobs:
           # git config user.email "mr.kanneganti6003@gmail.com" # Replace with your email
           git tag $NEW_TAG
           git push origin $NEW_TAG
+
+       # Optional: Deployment based on the environment choice
+      - name: Deploy to Production
+        if: ${{ github.event.inputs.choice == 'main' }}
+        run: |
+          echo "Deploying to Production..."
